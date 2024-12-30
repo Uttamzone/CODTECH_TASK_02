@@ -1,0 +1,98 @@
+pip install gym numpy matplotlib
+
+import gym
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create the CartPole environment
+env = gym.make('CartPole-v1')
+
+# Hyperparameters
+learning_rate = 0.1  # How much new information overrides old
+discount_factor = 0.99  # Importance of future rewards
+epsilon = 1.0  # Exploration rate (initially high)
+epsilon_decay = 0.995  # Decay rate of exploration
+min_epsilon = 0.01  # Minimum exploration rate
+episodes = 1000  # Total training episodes
+
+# Discretize the observation space for Q-Table
+state_bins = [20, 20, 50, 50]  # Number of bins for each observation variable
+state_bounds = list(zip(env.observation_space.low, env.observation_space.high))
+state_bounds[1] = (-3, 3)  # Clip velocity
+state_bounds[3] = (-4, 4)  # Clip angular velocity
+state_bins = [np.linspace(b[0], b[1], num=n) for b, n in zip(state_bounds, state_bins)]
+
+# Initialize Q-Table
+q_table = np.random.uniform(low=-1, high=1, size=([len(b) + 1 for b in state_bins] + [env.action_space.n]))
+
+def get_discrete_state(state):
+    discrete_state = []
+    for i, value in enumerate(state):
+        discrete_state.append(np.digitize(value, state_bins[i]))
+    return tuple(discrete_state)
+
+def choose_action(state):
+    if np.random.random() < epsilon:
+        return np.random.randint(0, env.action_space.n)  # Random action (explore)
+    else:
+        return np.argmax(q_table[state])  # Action with highest Q-value (exploit
+
+rewards = []
+
+for episode in range(episodes):
+    state = get_discrete_state(env.reset()[0])  # Reset environment and get initial state
+    total_reward = 0
+    done = False
+
+    while not done:
+        # Choose an action
+        action = choose_action(state)
+        
+        # Take the action, observe next state and reward
+        next_state, reward, done, _, _ = env.step(action)
+        next_state = get_discrete_state(next_state)
+        total_reward += reward
+
+        if not done:
+            # Update Q-Value using the Q-Learning formula
+            max_future_q = np.max(q_table[next_state])
+            current_q = q_table[state + (action,)]
+            new_q = current_q + learning_rate * (reward + discount_factor * max_future_q - current_q)
+            q_table[state + (action,)] = new_q
+        
+        # Update the current state
+        state = next_state
+
+    # Decay epsilon
+    global epsilon
+    if epsilon > min_epsilon:
+        epsilon *= epsilon_decay
+
+    # Track rewards
+    rewards.append(total_reward)
+
+    # Print progress
+    if episode % 100 == 0:
+        print(f"Episode: {episode}, Total Reward: {total_reward}")
+
+env.close()
+
+plt.plot(rewards)
+plt.xlabel("Episodes")
+plt.ylabel("Rewards")
+plt.title("Rewards Over Episodes")
+plt.show()
+
+state = get_discrete_state(env.reset()[0])
+done = False
+total_reward = 0
+
+while not done:
+    env.render()  # Visualize the environment
+    action = np.argmax(q_table[state])  # Choose the best action
+    next_state, reward, done, _, _ = env.step(action)
+    state = get_discrete_state(next_state)
+    total_reward += reward
+
+print(f"Total Reward: {total_reward}")
+env.close()
