@@ -7,12 +7,12 @@ Domain: Artificial Intelligence
 Duration: Dec 20th, 2024 to April 2025
 Mentor: Neela Santosh Kumar
 
+Overview of the Project
+This project involves implementing and training a Reinforcement Learning (RL) agent to play a complex game. The goal is to leverage RL techniques to enable the agent to learn optimal strategies for maximizing performance within the game's environment. The complexity of the game provides a challenging testbed for evaluating state-of-the-art RL algorithms.
+
 ![image](https://github.com/user-attachments/assets/bb2f237e-4a44-488a-b9c9-fcb8733baf58)
 ![image](https://github.com/user-attachments/assets/51f5f969-f10f-4543-a96c-ee783de245ff)
 ![image](https://github.com/user-attachments/assets/93cb5d70-d2fa-4686-a92e-193918016064)
-
-Overview of the Project
-This project involves implementing and training a Reinforcement Learning (RL) agent to play a complex game. The goal is to leverage RL techniques to enable the agent to learn optimal strategies for maximizing performance within the game's environment. The complexity of the game provides a challenging testbed for evaluating state-of-the-art RL algorithms.
 
 Objective
 Develop an RL agent capable of learning and executing strategies to play a complex game effectively.
