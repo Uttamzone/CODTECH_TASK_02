@@ -1,5 +1,12 @@
 # CODTECH_TASK_02
 
+Name: Uttam Kumar Singh
+Company: CODTECH IT SOLUTION
+ID: CT4MFIP
+Domain: Artificial Intelligence
+Duration: Dec 20th, 2024 to April 2025
+Mentor: Neela Santosh Kumar
+
 ![image](https://github.com/user-attachments/assets/bb2f237e-4a44-488a-b9c9-fcb8733baf58)
 ![image](https://github.com/user-attachments/assets/51f5f969-f10f-4543-a96c-ee783de245ff)
 ![image](https://github.com/user-attachments/assets/93cb5d70-d2fa-4686-a92e-193918016064)
